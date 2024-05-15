@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+// show time input timepicker icon
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: block !important;
+}
+
+._form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 500px;
+  margin: 1rem auto;
+}

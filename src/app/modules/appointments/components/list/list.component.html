@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div class="row">
+    @for (appointment of appointments; track appointment.id) {
+    <div class="col-6 h-100">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{ appointment.id }}</mat-card-title>
+          <!-- <mat-card-subtitle>{{ appointment.category }}</mat-card-subtitle> -->
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>Especialidade: {{ appointment.specialty }}</p>
+          <p>Médico: {{ appointment.doctor }}</p>
+          <p>Data: {{ parseDate(appointment.date) }}</p>
+          <p>Hora: {{ appointment.time }}</p>
+          <p>Obs: {{ appointment.obs }}</p>
+          <p>Status: {{ appointment.status }}</p>
+        </mat-card-content>
+        <mat-card-actions class="d-flex justify-content-end mt-4">
+          <button
+            mat-flat-button
+            color="primary"
+            class="me-2"
+            (click)="editAppointment(appointment.id!)"
+          >
+            Editar
+          </button>
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="openDialog(appointment.id!)"
+          >
+            Excluir
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    } @empty {
+    <div class="col-12 text-center">Nenhuma consulta cadastrada</div>
+    }
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+  <h1 class="mt-5 text-center">{{ id ? "Alterar" : "Agendar" }} Consulta</h1>
+  <form [formGroup]="form" (ngSubmit)="onSave()" class="_form">
+    <mat-form-field>
+      <mat-label>Especialidade</mat-label>
+      <input
+        matInput
+        formControlName="specialty"
+        name="specialty"
+        id="specialty"
+      />
+      <mat-error>O campo é obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Médico</mat-label>
+      <input matInput formControlName="doctor" name="doctor" id="doctor" />
+      <mat-error>O campo é obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" />
+      <mat-hint>DD/MM/AAAA</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Hora</mat-label>
+      <input
+        matInput
+        type="time"
+        id="time"
+        name="time"
+        formControlName="time"
+        value=""
+      />
+      <mat-error>O campo é obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Observação</mat-label>
+      <input matInput formControlName="obs" name="obs" id="obs" />
+    </mat-form-field>
+
+    <div class="d-flex justify-content-end">
+      <button mat-flat-button color="" type="reset" class="me-3">Limpar</button>
+      <button mat-flat-button color="primary" [disabled]="form.invalid">
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>
+
+<!--
+            <input
+              type="time"
+              id="dueHour"
+              name="dueHour"
+              class="form-control"
+              value="00:00"
+              formControlName="dueHo name="dueHouid="dueHor"
+              maxlength="5"
+              pattern="[0-2][0-9]:[0-5][0-9]"
+              placeholder="HH:MM"
+              required
+            />
+
+ -->
