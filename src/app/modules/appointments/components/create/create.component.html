@@ -47,26 +47,17 @@
     </mat-form-field>
 
     <div class="d-flex justify-content-end">
-      <button mat-flat-button color="" type="reset" class="me-3">Limpar</button>
-      <button mat-flat-button color="primary" [disabled]="form.invalid">
+      <button mat-stroked-button color="" type="reset" class="me-2">
+        Limpar
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class=""
+        [disabled]="form.invalid"
+      >
         Salvar
       </button>
     </div>
   </form>
 </div>
-
-<!--
-            <input
-              type="time"
-              id="dueHour"
-              name="dueHour"
-              class="form-control"
-              value="00:00"
-              formControlName="dueHo name="dueHouid="dueHor"
-              maxlength="5"
-              pattern="[0-2][0-9]:[0-5][0-9]"
-              placeholder="HH:MM"
-              required
-            />
-
- -->

@@ -1,3 +1,20 @@
-.spacer {
-  flex: 1 1 auto;
+.header-logo {
+  h1 {
+    display: inline-block;
+  }
+
+  i {
+    font-size: 1.3rem;
+    margin-right: 4px;
+  }
+}
+
+button {
+  font-weight: 600;
+
+  &:hover {
+    background-color: var(--primary);
+    color: white;
+    transition: background-color 0.5s, color 0.5s;
+  }
 }

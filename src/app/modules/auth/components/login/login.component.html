@@ -1,40 +1,38 @@
 <div class="container">
-  <h1 class="mt-5 text-center">Login</h1>
+  <img
+    src="/assets/doc.png"
+    alt=""
+    class="d-block mx-auto my-5"
+    style="width: 150px; height: auto"
+  />
+  <h1 class="text-primary text-center fw-semibold">Login</h1>
   <form [formGroup]="form" (ngSubmit)="login()" class="_form">
-    <div class="">
-      <div class="">
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" placeholder="email" />
-          <mat-error>Digite um email válido</mat-error>
-        </mat-form-field>
-      </div>
-    </div>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="email" />
+      <mat-error>Digite um email válido</mat-error>
+    </mat-form-field>
 
-    <div class="">
-      <div class="">
-        <mat-form-field>
-          <mat-label>Senha</mat-label>
-          <input
-            type="password"
-            matInput
-            formControlName="password"
-            placeholder="senha"
-          />
-        </mat-form-field>
-      </div>
-    </div>
+    <mat-form-field>
+      <mat-label>Senha</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="senha"
+      />
+    </mat-form-field>
 
     <div class="d-flex flex-column justify-content-end text-center">
       <button
         mat-flat-button
-        class=""
         color="primary"
+        class=""
         [disabled]="form.invalid"
       >
         Entrar
       </button>
-      <p class="mt-5 mb-2">Ainda não tem conta?</p>
+      <p class="mt-4 mb-1">Ainda não tem conta?</p>
       <button
         mat-button
         class="text-lg-center"
