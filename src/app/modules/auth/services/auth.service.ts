@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment.development';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthUser, User, UserCredentials } from '../models/user.model';
 import { Constants } from '../../../commons/constants/contants.enum';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class AuthService {
 
   apiUrl = `${environment.API_URL}/auth`;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.checkAuthStatus();
   }
 
@@ -31,10 +32,12 @@ export class AuthService {
     localStorage.removeItem(Constants.TOKEN_KEY);
     this.user$.next(null);
     this.checkAuthStatus();
+    this.router.navigate(['auth', 'login']);
   }
 
-  checkAuthStatus(): void {
+  checkAuthStatus(): Observable<boolean> {
     const token = localStorage.getItem(Constants.TOKEN_KEY);
     this.isLoggedIn$.next(!!token);
+    return this.isLoggedIn$;
   }
 }

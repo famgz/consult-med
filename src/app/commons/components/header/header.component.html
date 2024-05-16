@@ -1,38 +1,52 @@
-<mat-toolbar>
-  @if(authService.checkAuthStatus() | async) {
-  <button mat-button routerLink="/"><h1>Consult Med</h1></button>
-  <span class="spacer"></span>
-  <button
-    mat-button
-    aria-label="Botao cadastrar consulta"
-    routerLink="/appointments/create"
-    class="me-3"
-  >
-    Agendar
-  </button>
-  <button
-    mat-button
-    aria-label="Botao mostrar contultas"
-    routerLink="/appointments"
-    class="me-5"
-  >
-    Consultas
-  </button>
+<mat-toolbar class="">
+  <div class="container d-flex justify-content-between">
+    <button
+      mat-button
+      color="primary"
+      routerLink="/"
+      class="header-logo flex-center"
+    >
+      <i class="fa-solid fa-laptop-medical"></i>
+      <h1 class="fw-bold">Consult Med</h1>
+    </button>
+    @if(authService.checkAuthStatus() | async) {
+    <div>
+      <button
+        mat-button
+        aria-label="Botao cadastrar consulta"
+        routerLink="/appointments/create"
+        class="me-3"
+      >
+        Agendar
+      </button>
+      <button
+        mat-button
+        aria-label="Botao mostrar contultas"
+        routerLink="/appointments"
+        class="me-5"
+      >
+        Consultas
+      </button>
 
-  <p>Olá {{ authService.user$ }}</p>
+      <button
+        mat-button
+        aria-label="Botao logout"
+        (click)="authService.logout()"
+      >
+        Logout
+      </button>
+    </div>
+    } @else {
 
-  <button mat-button aria-label="Botao logout" (click)="handleLogout()">
-    Logout
-  </button>
-  } @else {
-
-  <button
-    color="primary"
-    mat-flat-button
-    aria-label="Botao login"
-    routerLink="/auth/login"
-  >
-    Login
-  </button>
-  }
+    <button
+      mat-flat-button
+      color="primary"
+      class=""
+      aria-label="Botao login"
+      routerLink="/auth/login"
+    >
+      Login
+    </button>
+    }
+  </div>
 </mat-toolbar>

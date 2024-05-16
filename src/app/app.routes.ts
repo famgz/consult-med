@@ -5,6 +5,7 @@ import { ListComponent } from './modules/appointments/components/list/list.compo
 import { CreateComponent } from './modules/appointments/components/create/create.component';
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { RegisterComponent } from './modules/auth/components/register/register.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,7 @@ export const routes: Routes = [
   {
     path: 'appointments',
     component: AppointmentsComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
