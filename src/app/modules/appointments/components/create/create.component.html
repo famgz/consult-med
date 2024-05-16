@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="mt-5 text-center">{{ id ? "Alterar" : "Agendar" }} Consulta</h1>
+  <h1 class="my-5 text-center">{{ id ? "Alterar" : "Agendar" }} Consulta</h1>
   <form [formGroup]="form" (ngSubmit)="onSave()" class="_form">
     <mat-form-field>
       <mat-label>Especialidade</mat-label>
@@ -37,7 +37,6 @@
         id="time"
         name="time"
         formControlName="time"
-        value=""
       />
       <mat-error>O campo é obrigatório</mat-error>
     </mat-form-field>
@@ -50,7 +49,7 @@
     <div class="d-flex justify-content-end">
       <button mat-flat-button color="" type="reset" class="me-3">Limpar</button>
       <button mat-flat-button color="primary" [disabled]="form.invalid">
-        Cadastrar
+        Salvar
       </button>
     </div>
   </form>

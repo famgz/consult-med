@@ -1,4 +1,5 @@
 <mat-toolbar>
+  @if(authService.checkAuthStatus() | async) {
   <button mat-button routerLink="/"><h1>Consult Med</h1></button>
   <span class="spacer"></span>
   <button
@@ -10,13 +11,21 @@
     Agendar
   </button>
   <button
-    class="me-5"
     mat-button
     aria-label="Botao mostrar contultas"
-    routerLink="/"
+    routerLink="/appointments"
+    class="me-5"
   >
     Consultas
   </button>
+
+  <p>Olá {{ authService.user$ }}</p>
+
+  <button mat-button aria-label="Botao logout" (click)="handleLogout()">
+    Logout
+  </button>
+  } @else {
+
   <button
     color="primary"
     mat-flat-button
@@ -25,4 +34,5 @@
   >
     Login
   </button>
+  }
 </mat-toolbar>

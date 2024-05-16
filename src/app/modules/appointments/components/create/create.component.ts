@@ -57,7 +57,8 @@ export class CreateComponent implements OnInit {
       specialty: new FormControl(null, [Validators.required]),
       doctor: new FormControl(null, [Validators.required]),
       date: new FormControl(null, [Validators.required]),
-      time: new FormControl('00:00', [
+      time: new FormControl(null, [
+        Validators.required,
         Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/),
       ]),
       obs: new FormControl(null, [Validators.required]),

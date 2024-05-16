@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -10,4 +11,6 @@ import { LoginComponent } from './components/login/login.component';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
 })
-export class AuthComponent {}
+export class AuthComponent {
+  constructor(private authService: AuthService) {}
+}

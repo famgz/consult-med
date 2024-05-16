@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { AuthUser, UserCredentials } from '../../models/user.model';
+import { Router, RouterLink } from '@angular/router';
 import { first } from 'rxjs';
-import { environment } from '../../../../../environments/environment.development';
 import { Constants } from '../../../../commons/constants/contants.enum';
+import { AuthUser, UserCredentials } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +17,7 @@ import { Constants } from '../../../../commons/constants/contants.enum';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -47,6 +47,8 @@ export class LoginComponent implements OnInit {
         next: (res: AuthUser) => {
           console.log(res);
           localStorage.setItem(Constants.TOKEN_KEY, res.token);
+          this.authService.isLoggedIn$.next(true);
+          this.authService.user$.next(res.user);
         },
         error: (err) => {
           console.error(err);

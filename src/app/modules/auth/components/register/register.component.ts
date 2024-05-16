@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
-  FormControlState,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -9,10 +8,10 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../../services/auth.service';
-import { AddUser, User } from '../../models/user.model';
-import { first } from 'rxjs';
 import { Router } from '@angular/router';
+import { first } from 'rxjs';
+import { AddUser } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -29,11 +28,11 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
 
+  constructor(private authService: AuthService, private router: Router) {}
+
   ngOnInit(): void {
     this.buildForm();
   }
-
-  constructor(private authService: AuthService, private router: Router) {}
 
   buildForm(): void {
     this.form = new FormGroup({
