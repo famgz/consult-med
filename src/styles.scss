@@ -1,4 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: rgb(103, 58, 183);
+}
+
+$primary: var(--primary) !default;
+
+.text-primary {
+  color: $primary !important;
+}
 
 html,
 body {
@@ -24,4 +32,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   max-width: 500px;
   margin: 1rem auto;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
