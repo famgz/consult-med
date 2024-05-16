@@ -10,8 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
-import { AddUser } from '../../models/user.model';
+import { AddUser, UserRole } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-register',
@@ -21,12 +22,14 @@ import { AuthService } from '../../services/auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
+  userRoles = Object.values(UserRole);
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -39,7 +42,7 @@ export class RegisterComponent implements OnInit {
       name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [Validators.required]),
-      role: new FormControl(null, [Validators.required]),
+      role: new FormControl('USER', [Validators.required]),
     });
   }
 
