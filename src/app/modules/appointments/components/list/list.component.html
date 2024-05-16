@@ -1,43 +1,77 @@
 <div class="container mt-5">
   <h1 class="my-5 text-center">Consultas</h1>
-  <div class="row">
-    @for (appointment of appointments; track appointment.id) {
-    <div class="col-6 h-100">
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>{{ appointment.id }}</mat-card-title>
-          <!-- <mat-card-subtitle>{{ appointment.category }}</mat-card-subtitle> -->
-        </mat-card-header>
+  @for (apptm of appointments; track apptm.id) {
 
-        <mat-card-content>
-          <p>Especialidade: {{ appointment.specialty }}</p>
-          <p>Médico: {{ appointment.doctor }}</p>
-          <p>Data: {{ parseDate(appointment.date) }}</p>
-          <p>Hora: {{ appointment.time }}</p>
-          <p>Obs: {{ appointment.obs }}</p>
-          <p>Status: {{ appointment.status }}</p>
-        </mat-card-content>
-        <mat-card-actions class="d-flex justify-content-end mt-4">
-          <button
-            mat-flat-button
-            color="primary"
-            class="me-2"
-            (click)="editAppointment(appointment.id!)"
-          >
-            Editar
-          </button>
-          <button
-            mat-stroked-button
-            color="warn"
-            (click)="openDialog(appointment.id!)"
-          >
-            Excluir
-          </button>
-        </mat-card-actions>
-      </mat-card>
+  <div class="apptm-card">
+    <div class="apptm-date">
+      <span>{{ dateParser.getDayMonthShort(apptm.date) }}</span>
+      <span>{{ dateParser.getYear(apptm.date) }}</span>
     </div>
-    } @empty {
-    <div class="col-12 text-center">Nenhuma consulta cadastrada</div>
-    }
+
+    <div class="apptm-info">
+      <span class="apptm-hour">{{ apptm.time }}</span>
+      <span class="apptm-doctor">Dr. {{ apptm.doctor }}</span>
+      <span class="apptm-obs" title="{{ apptm.obs }}">{{ apptm.obs }}</span>
+      <span class="apptm-specialty">{{ apptm.specialty }}</span>
+    </div>
+
+    <mat-card-actions class="flex-center">
+      <button
+        mat-mini-fab
+        color="primary"
+        class="flex-center"
+        (click)="editAppointment(apptm.id!)"
+      >
+        <i class="fa-solid fa-pen"></i>
+      </button>
+      <button
+        mat-mini-fab
+        color=""
+        class="flex-center text-muted"
+        (click)="openDialog(apptm.id!)"
+      >
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </mat-card-actions>
   </div>
+
+  } @empty {
+  <div class="col-12 text-center">Nenhuma consulta cadastrada</div>
+  }
 </div>
+
+<!-- <div class="">
+  <mat-card class="">
+    <mat-card-header>
+      <mat-card-title>{{ appointment.id }}</mat-card-title>
+      <mat-card-subtitle>{{ appointment.category }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Especialidade: {{ appointment.specialty }}</p>
+      <p>Médico: {{ appointment.doctor }}</p>
+      <p>Data: {{ parseDate(appointment.date) }}</p>
+      <p>Hora: {{ appointment.time }}</p>
+      <p>Obs: {{ appointment.obs }}</p>
+      <p>Status: {{ appointment.status }}</p>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-end mt-4">
+      <button
+        mat-flat-button
+        color="primary"
+        class="me-2"
+        (click)="editAppointment(appointment.id!)"
+      >
+        Editar
+      </button>
+      <button
+        mat-stroked-button
+        color="warn"
+        class=""
+        (click)="openDialog(appointment.id!)"
+      >
+        Excluir
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div> -->

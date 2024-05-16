@@ -1,0 +1,94 @@
+.apptm-card {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+  max-width: 678px;
+  margin: 0 auto;
+
+  .apptm-date {
+    min-width: 120px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 999px;
+    border: 2px solid var(--primary);
+    opacity: 0.7;
+
+    &::before {
+      content: " ";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background-color: var(--primary);
+      opacity: 0.12;
+    }
+
+    span {
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+  }
+
+  .apptm-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 1 1;
+    overflow: hidden;
+
+    span {
+      display: block;
+    }
+
+    .apptm-hour {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .apptm-doctor {
+      font-size: 1.25rem;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .apptm-obs {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #aaa;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .apptm-specialty {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary);
+      opacity: 0.8;
+      text-transform: capitalize;
+    }
+  }
+
+  mat-card-actions {
+    gap: 0.5rem;
+    align-items: end;
+
+    @media (max-width: 400px) {
+      flex-direction: column;
+      justify-content: end;
+    }
+
+    button {
+      padding: 0;
+      // min-width: 40px;
+      // max-width: 40px;
+    }
+  }
+}
