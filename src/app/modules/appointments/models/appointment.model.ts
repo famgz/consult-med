@@ -17,7 +17,13 @@ export interface AddAppointment {
 }
 
 export enum AppointmentStatus {
-  SCHEDULED = 'Agendada',
-  DONE = 'Concluída',
-  CANCELED = 'Cancelada',
+  SCHEDULED = 'SCHEDULED',
+  DONE = 'DONE',
+  CANCELED = 'CANCELED',
 }
+
+export const appointmentStatusDict = {
+  SCHEDULED: { title: 'Agendada', color: '#ccc' },
+  DONE: { title: 'Concluída', color: 'forestgreen' },
+  CANCELED: { title: 'Cancelada', color: 'tomato' },
+};

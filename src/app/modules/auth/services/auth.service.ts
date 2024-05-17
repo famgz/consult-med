@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthUser, User, UserCredentials } from '../models/user.model';
@@ -9,14 +9,16 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  user$ = new BehaviorSubject<User | null>(null);
+export class AuthService implements OnInit {
+  user: User | null = null;
 
   isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   apiUrl = `${environment.API_URL}/auth`;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit(): void {
     this.checkAuthStatus();
   }
 
@@ -30,7 +32,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(Constants.TOKEN_KEY);
-    this.user$.next(null);
+    localStorage.removeItem(Constants.USER_INFO);
     this.checkAuthStatus();
     this.router.navigate(['auth', 'login']);
   }
@@ -38,6 +40,8 @@ export class AuthService {
   checkAuthStatus(): Observable<boolean> {
     const token = localStorage.getItem(Constants.TOKEN_KEY);
     this.isLoggedIn$.next(!!token);
+    const userInfoString = localStorage.getItem(Constants.USER_INFO);
+    this.user = userInfoString ? JSON.parse(userInfoString) : null;
     return this.isLoggedIn$;
   }
 }

@@ -45,15 +45,14 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: (res: AuthUser) => {
-          console.log(res);
           localStorage.setItem(Constants.TOKEN_KEY, res.token);
-          this.authService.isLoggedIn$.next(true);
-          this.authService.user$.next(res.user);
+          localStorage.setItem(Constants.USER_INFO, JSON.stringify(res.user));
         },
         error: (err) => {
           console.error(err);
         },
         complete: () => {
+          this.authService.checkAuthStatus();
           this.router.navigate(['appointments']);
         },
       });

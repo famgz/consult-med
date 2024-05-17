@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Appointment } from '../models/appointment.model';
-import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
-import { Constants } from '../../../commons/constants/contants.enum';
+import { environment } from '../../../../environments/environment.development';
+import { AddAppointment, Appointment } from '../models/appointment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,16 +20,24 @@ export class AppointmentsService {
     return this.http.get<Appointment>(this.apiUrl + '/' + id);
   }
 
-  saveAppointment(appointment: Appointment): Observable<void> {
+  saveAppointment(appointment: AddAppointment): Observable<void> {
     return this.http.post<void>(this.apiUrl, appointment!);
   }
 
-  updateAppointment(id: string, appointment: Appointment): Observable<void> {
+  updateAppointment(id: string, appointment: AddAppointment): Observable<void> {
     return this.http.put<void>(this.apiUrl + '/' + id, appointment!);
   }
 
   deleteAppointment(id: string): Observable<void> {
     return this.http.delete<void>(this.apiUrl + '/' + id);
+  }
+
+  cancelAppointment(id: string): Observable<void> {
+    return this.http.put<void>(this.apiUrl + '/cancel/' + id, {});
+  }
+
+  doneAppointment(id: string): Observable<void> {
+    return this.http.put<void>(this.apiUrl + '/done/' + id, {});
   }
 
   // private setHeaders() {
