@@ -1,63 +1,127 @@
-<div class="container">
-  <h1 class="my-5 text-center">{{ id ? "Alterar" : "Agendar" }} Consulta</h1>
-  <form [formGroup]="form" (ngSubmit)="onSave()" class="_form">
-    <mat-form-field>
-      <mat-label>Especialidade</mat-label>
-      <input
-        matInput
-        formControlName="specialty"
-        name="specialty"
-        id="specialty"
-      />
-      <mat-error>O campo é obrigatório</mat-error>
-    </mat-form-field>
+<div class="container mt-5">
+  <div class="_form position-relative">
+    <h1 class="text-center">{{ id ? "Editar" : "Agendar" }} Consulta</h1>
 
-    <mat-form-field>
-      <mat-label>Médico</mat-label>
-      <input matInput formControlName="doctor" name="doctor" id="doctor" />
-      <mat-error>O campo é obrigatório</mat-error>
-    </mat-form-field>
+    <!-- Back button -->
+    <button
+      mat-icon-button
+      color=""
+      type="button"
+      class="me-auto position-absolute top-0 text-bg-light text-muted"
+      routerLink="/appointments"
+    >
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
 
-    <mat-form-field>
-      <mat-label>Data</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="date" />
-      <mat-hint>DD/MM/AAAA</mat-hint>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Hora</mat-label>
-      <input
-        matInput
-        type="time"
-        id="time"
-        name="time"
-        formControlName="time"
-      />
-      <mat-error>O campo é obrigatório</mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Observação</mat-label>
-      <input matInput formControlName="obs" name="obs" id="obs" />
-    </mat-form-field>
-
-    <div class="d-flex justify-content-end">
-      <button mat-stroked-button color="" type="reset" class="me-2">
-        Limpar
-      </button>
-      <button
-        mat-flat-button
-        color="primary"
-        class=""
-        [disabled]="form.invalid"
+    <!-- Status -->
+    @if (canEdit && appointment) {
+    <form
+      [formGroup]="statusForm"
+      (ngSubmit)="onSubmitStatus()"
+      class="border-bottom pb-4"
+    >
+      <h2 class="d-block mb-1">Alterar Status</h2>
+      <mat-radio-group
+        aria-label="Select an option"
+        class="mb-3"
+        formControlName="status"
       >
-        Salvar
-      </button>
+        <div class="d-flex justify-content-between">
+          @for(status of apptmStatusList; track status) {
+          <mat-radio-button
+            color="primary"
+            value="{{ status }}"
+            [checked]="status === appointment.status"
+            >{{ statusDict[status].title }}</mat-radio-button
+          >
+          }
+        </div>
+      </mat-radio-group>
+
+      <div class="d-flex justify-content-end mt-3">
+        <div>
+          <!-- Save button -->
+          <button mat-flat-button color="primary" class="">Salvar</button>
+        </div>
+      </div>
+    </form>
+    }
+
+    <!-- Infos -->
+    <div>
+      @if(id) {
+      <h2 class="d-block mb-1">Alterar informações</h2>
+      }
+      <form [formGroup]="infoForm" (ngSubmit)="onSubmitInfo()" class="">
+        <mat-form-field>
+          <mat-label>Especialidade</mat-label>
+          <input
+            matInput
+            formControlName="specialty"
+            name="specialty"
+            id="specialty"
+          />
+          <mat-error>O campo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Médico</mat-label>
+          <input matInput formControlName="doctor" name="doctor" id="doctor" />
+          <mat-error>O campo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Data</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="date"
+            [min]="nextDayString"
+          />
+          <mat-hint>DD/MM/AAAA</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Hora</mat-label>
+          <input
+            matInput
+            type="time"
+            id="time"
+            name="time"
+            formControlName="time"
+          />
+          <mat-error>O campo é obrigatório</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Observação</mat-label>
+          <input matInput formControlName="obs" name="obs" id="obs" />
+        </mat-form-field>
+
+        <div class="d-flex justify-content-end">
+          <div>
+            <!-- Reset button -->
+            <button mat-stroked-button color="" type="reset" class="me-2">
+              Limpar
+            </button>
+
+            <!-- Save button -->
+            <button
+              mat-flat-button
+              color="primary"
+              class=""
+              [disabled]="infoForm.invalid"
+            >
+              Salvar
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>

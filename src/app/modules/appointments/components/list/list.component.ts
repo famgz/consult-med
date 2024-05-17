@@ -7,8 +7,11 @@ import { Router, RouterModule } from '@angular/router';
 import { Subject, first } from 'rxjs';
 import { ConfirmationModalComponent } from '../../../../commons/components/confirmation-modal/confirmation-modal.component';
 import { DateParserService } from '../../../../commons/services/date-parser.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { Appointment } from '../../models/appointment.model';
 import { AppointmentsService } from '../../services/appointments.service';
+import { PermissionsService } from '../../services/permissions.service';
+import { appointmentStatusDict } from './../../models/appointment.model';
 
 @Component({
   selector: 'app-list',
@@ -22,15 +25,22 @@ export class ListComponent implements OnInit, OnDestroy {
 
   appointments: Appointment[] = [];
 
+  statusDict = appointmentStatusDict;
+
   constructor(
     private productsService: AppointmentsService,
     public dialog: MatDialog,
     private router: Router,
-    public dateParser: DateParserService
+    public authService: AuthService,
+    public dateParser: DateParserService,
+    public permissions: PermissionsService
   ) {}
 
   ngOnInit(): void {
-    this.getAppointments();
+    // to avoid ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.getAppointments();
+    }, 0);
   }
 
   getAppointments(): void {
@@ -38,8 +48,13 @@ export class ListComponent implements OnInit, OnDestroy {
       .getAppointments()
       .pipe(first())
       .subscribe({
-        next: (response: Appointment[]) => {
-          this.appointments = response;
+        next: (res: Appointment[]) => {
+          this.appointments = res.sort((a, b) => {
+            const dateTimeA = this.dateParser.getAppointmentFullDate(a);
+            const dateTimeB = this.dateParser.getAppointmentFullDate(b);
+            return dateTimeB.getTime() - dateTimeA.getTime();
+          });
+          console.log(res);
         },
         error: (err) => console.error(err),
       });

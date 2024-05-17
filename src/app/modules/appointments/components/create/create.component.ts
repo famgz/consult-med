@@ -11,10 +11,18 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import moment from 'moment';
 import { first } from 'rxjs';
-import { Appointment } from '../../models/appointment.model';
+import { DateParserService } from '../../../../commons/services/date-parser.service';
+import {
+  Appointment,
+  AppointmentStatus,
+  appointmentStatusDict,
+} from '../../models/appointment.model';
+import { PermissionsService } from '../../services/permissions.service';
 import { AppointmentsService } from './../../services/appointments.service';
 
 @Component({
@@ -30,38 +38,68 @@ import { AppointmentsService } from './../../services/appointments.service';
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule,
+    MatRadioModule,
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })
 export class CreateComponent implements OnInit {
-  form!: FormGroup;
+  infoForm!: FormGroup;
+  statusForm!: FormGroup;
+
   id = '';
+  nextDay = moment().add(2, 'days');
+  nextDayString = this.nextDay.format('YYYY-MM-DD');
+
+  appointment: Appointment | null = null;
+
+  canEdit: boolean = false;
+
+  apptmStatusList = Object.values(AppointmentStatus);
+
+  statusDict = appointmentStatusDict;
 
   constructor(
     private productsService: AppointmentsService,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
-    this.buildForm();
-    this.id = this.route.snapshot.params['id']; // this.route.snapshot.paramMap.get('id')
-    if (this.id) {
-      this.getAppointmentById();
-    }
+    private route: ActivatedRoute,
+    public dateParser: DateParserService,
+    public permissions: PermissionsService
+  ) {
+    this.buildInfoForm();
+    this.buildStatusForm();
   }
 
-  buildForm(): void {
-    this.form = new FormGroup({
+  ngOnInit(): void {
+    // to avoid ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.id = this.route.snapshot.params['id']; // this.route.snapshot.paramMap.get('id')
+      // edit mode -> patch the form
+      if (this.id) {
+        this.getAppointmentById();
+      }
+    }, 0);
+  }
+
+  buildInfoForm(): void {
+    this.infoForm = new FormGroup({
       specialty: new FormControl(null, [Validators.required]),
       doctor: new FormControl(null, [Validators.required]),
-      date: new FormControl(null, [Validators.required]),
+      date: new FormControl(null, [
+        Validators.required,
+        Validators.min(this.nextDay.millisecond()),
+      ]),
       time: new FormControl(null, [
         Validators.required,
         Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/),
       ]),
       obs: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  buildStatusForm(): void {
+    this.statusForm = new FormGroup({
+      status: new FormControl(null, Validators.required),
     });
   }
 
@@ -71,8 +109,9 @@ export class CreateComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: (appointment) => {
-          console.log({ appointment });
-          this.form.patchValue(appointment);
+          this.appointment = appointment;
+          this.canEdit = this.permissions.canEdit(this.appointment);
+          this.infoForm.patchValue(appointment);
         },
         error: (err) => {
           console.error(err);
@@ -80,11 +119,48 @@ export class CreateComponent implements OnInit {
       });
   }
 
-  onSave(): void {
-    const appointment: Appointment = this.form.getRawValue();
+  onSubmitInfo(): void {
+    const appointment: Appointment = this.infoForm.getRawValue();
     this.id
       ? this.updateAppointment(appointment)
       : this.createAppointment(appointment);
+  }
+
+  onSubmitStatus(): void {
+    if (!this.id) {
+      console.log('No id was found');
+      return;
+    }
+
+    const status: AppointmentStatus = this.statusForm.getRawValue().status;
+    if (!status || !this.apptmStatusList.includes(status)) {
+      console.log(`Invalid status: ${status}`);
+      return;
+    }
+
+    let func;
+
+    switch (status) {
+      case AppointmentStatus.DONE:
+        func = this.productsService.doneAppointment(this.id);
+        break;
+      case AppointmentStatus.CANCELED:
+        func = this.productsService.cancelAppointment(this.id);
+        break;
+      default:
+        console.log(`Invalid status: ${status}`);
+        return;
+    }
+
+    func.pipe(first()).subscribe({
+      next: (res) => console.log({ res }),
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        this.router.navigate(['appointments']);
+      },
+    });
   }
 
   createAppointment(appointment: Appointment): void {
@@ -92,6 +168,7 @@ export class CreateComponent implements OnInit {
       .saveAppointment(appointment)
       .pipe(first())
       .subscribe({
+        next: (res) => console.log({ res }),
         error: (err) => {
           console.error(err);
         },
@@ -106,6 +183,7 @@ export class CreateComponent implements OnInit {
       .updateAppointment(this.id, appointment)
       .pipe(first())
       .subscribe({
+        next: (res) => console.log({ res }),
         error: (err) => {
           console.error(err);
         },

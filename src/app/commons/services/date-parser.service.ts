@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Appointment } from '../../modules/appointments/models/appointment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +33,9 @@ export class DateParserService {
       hour: '2-digit',
       minute: '2-digit',
     });
+  }
+
+  getAppointmentFullDate(apptm: Appointment) {
+    return new Date(`${apptm.date.split('T')[0]}T${apptm.time}`);
   }
 }
