@@ -10,22 +10,24 @@
       <h1 class="fw-bold">Consult Med</h1>
     </button>
     @if(authService.checkAuthStatus() | async) {
-    <div>
+    <div class="flex-center gap-2">
       <button
         mat-button
         aria-label="Botao cadastrar consulta"
         routerLink="/appointments/create"
-        class="me-3"
+        class=""
       >
-        Agendar
+        <i class="fa-solid fa-plus"></i>
+        <span class="btn-title"> Agendar </span>
       </button>
       <button
         mat-button
         aria-label="Botao mostrar contultas"
         routerLink="/appointments"
-        class="me-5"
+        class="me-3"
       >
-        Consultas
+        <i class="fa-solid fa-list-ul"></i>
+        <span class="btn-title">Consultas</span>
       </button>
 
       <button
@@ -33,19 +35,21 @@
         aria-label="Botao logout"
         (click)="authService.logout()"
       >
-        Logout
+        <span class="btn-title">Sair</span>
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
     </div>
     } @else {
 
     <button
-      mat-flat-button
+      mat-button
       color="primary"
       class=""
       aria-label="Botao login"
       routerLink="/auth/login"
     >
-      Login
+      <span class="btn-title">Login</span>
+      <i class="fa-solid fa-arrow-right-to-bracket"></i>
     </button>
     }
   </div>

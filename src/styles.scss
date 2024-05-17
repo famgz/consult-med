@@ -24,6 +24,18 @@ mat-form-field {
 // show time input timepicker icon
 input[type="time"]::-webkit-calendar-picker-indicator {
   display: block !important;
+  position: absolute;
+  top: 0.5rem;
+  right: -0.7rem;
+  scale: 1.25;
+  opacity: 0.75;
+  padding: 0.7rem;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
 }
 
 ._form {
@@ -31,7 +43,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   flex-direction: column;
   justify-content: center;
   max-width: 500px;
-  margin: 1rem auto;
+  margin: 0 auto;
+  gap: 2rem;
 }
 
 .flex-center {
@@ -39,4 +52,19 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+i.fa-solid,
+i.fa-regular,
+.mdc-button__label {
+  @extend .flex-center;
+  display: inline-flex;
+  gap: 0.4rem;
+}
+
+button:disabled,
+button[disabled] {
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+  box-shadow: none !important;
 }

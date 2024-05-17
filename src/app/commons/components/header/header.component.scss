@@ -5,7 +5,12 @@
 
   i {
     font-size: 1.3rem;
-    margin-right: 4px;
+  }
+
+  @media (max-width: 400px) {
+    h1 {
+      display: none;
+    }
   }
 }
 
@@ -16,5 +21,18 @@ button {
     background-color: var(--primary);
     color: white;
     transition: background-color 0.5s, color 0.5s;
+  }
+
+  @media (max-width: 540px) {
+    width: fit-content;
+    min-width: fit-content;
+
+    i.fa-solid {
+      font-size: 1.2rem;
+    }
+
+    .btn-title {
+      display: none;
+    }
   }
 }
