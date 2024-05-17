@@ -6,41 +6,43 @@
     style="width: 150px; height: auto"
   />
   <h1 class="text-primary text-center fw-semibold">Login</h1>
-  <form [formGroup]="form" (ngSubmit)="login()" class="_form">
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" placeholder="email" />
-      <mat-error>Digite um email válido</mat-error>
-    </mat-form-field>
+  <div class="_form">
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="email" />
+        <mat-error>Digite um email válido</mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Senha</mat-label>
-      <input
-        matInput
-        type="password"
-        formControlName="password"
-        placeholder="senha"
-      />
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="senha"
+        />
+      </mat-form-field>
 
-    <div class="d-flex flex-column justify-content-end text-center">
-      <button
-        mat-flat-button
-        color="primary"
-        class=""
-        [disabled]="form.invalid"
-      >
-        Entrar
-      </button>
-      <p class="mt-4 mb-1">Ainda não tem conta?</p>
-      <button
-        mat-button
-        class="text-lg-center"
-        routerLink="/auth/register"
-        type="button"
-      >
-        <span class="fs-5 text-decoration-underline">Cadastrar-se</span>
-      </button>
-    </div>
-  </form>
+      <div class="d-flex flex-column justify-content-end text-center">
+        <button
+          mat-flat-button
+          color="primary"
+          class=""
+          [disabled]="form.invalid"
+        >
+          Entrar
+        </button>
+        <p class="mt-4 mb-1">Ainda não tem conta?</p>
+        <button
+          mat-button
+          class="text-lg-center"
+          routerLink="/auth/register"
+          type="button"
+        >
+          <span class="fs-5 text-decoration-underline">Cadastrar-se</span>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

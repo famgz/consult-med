@@ -1,53 +1,39 @@
 <div class="container">
   <h1 class="mt-5 text-center">Cadastrar Usuário</h1>
-  <form [formGroup]="form" (ngSubmit)="register()" class="mx-auto _form">
-    <div class="row">
-      <div class="col-12">
-        <mat-form-field>
-          <mat-label>Nome</mat-label>
-          <input matInput formControlName="name" />
-        </mat-form-field>
-      </div>
-    </div>
+  <div class="_form">
+    <form [formGroup]="form" (ngSubmit)="register()" class="mx-auto">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
 
-    <div class="row">
-      <div class="col-12">
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input type="email" matInput formControlName="email" />
-        </mat-form-field>
-      </div>
-    </div>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" />
+      </mat-form-field>
 
-    <div class="row">
-      <div class="col-12">
-        <mat-form-field>
-          <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="password" />
-        </mat-form-field>
-      </div>
-    </div>
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
 
-    <div class="row">
-      <div class="col-12">
-        <mat-form-field>
-          <mat-label>Perfil</mat-label>
-          <select matNativeControl formControlName="role" required>
-            @for (role of userRoles; track role) {
-            <option value="{{ role }}">{{ role }}</option>
-            }
-          </select>
-        </mat-form-field>
-      </div>
-    </div>
+      <mat-form-field>
+        <mat-label>Perfil</mat-label>
+        <select matNativeControl formControlName="role" required>
+          @for (role of userRoles; track role) {
+          <option value="{{ role }}">{{ role }}</option>
+          }
+        </select>
+      </mat-form-field>
 
-    <div class="d-flex justify-content-end">
-      <button mat-stroked-button color="warn" class="me-3" type="reset">
-        Limpar
-      </button>
-      <button mat-flat-button color="primary" [disabled]="form.invalid">
-        Registrar
-      </button>
-    </div>
-  </form>
+      <div class="d-flex justify-content-end">
+        <button mat-stroked-button color="warn" class="me-3" type="reset">
+          Limpar
+        </button>
+        <button mat-flat-button color="primary" [disabled]="form.invalid">
+          Registrar
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
