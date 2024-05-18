@@ -24,6 +24,7 @@ import {
 } from '../../models/appointment.model';
 import { PermissionsService } from '../../services/permissions.service';
 import { AppointmentsService } from './../../services/appointments.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-create',
@@ -55,6 +56,8 @@ export class CreateComponent implements OnInit {
 
   canEdit: boolean = false;
 
+  apptmStatus = AppointmentStatus;
+
   apptmStatusList = Object.values(AppointmentStatus);
 
   statusDict = appointmentStatusDict;
@@ -64,7 +67,8 @@ export class CreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public dateParser: DateParserService,
-    public permissions: PermissionsService
+    public permissions: PermissionsService,
+    public authService: AuthService
   ) {
     this.buildInfoForm();
     this.buildStatusForm();
@@ -110,7 +114,6 @@ export class CreateComponent implements OnInit {
       .subscribe({
         next: (appointment) => {
           this.appointment = appointment;
-          this.canEdit = this.permissions.canEdit(this.appointment);
           this.infoForm.patchValue(appointment);
         },
         error: (err) => {

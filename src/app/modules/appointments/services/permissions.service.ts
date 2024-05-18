@@ -9,13 +9,21 @@ import { Appointment, AppointmentStatus } from '../models/appointment.model';
 export class PermissionsService {
   constructor(private authService: AuthService) {}
 
-  canEdit(apptm: Appointment): boolean {
+  canEditApptmInfo(apptm: Appointment): boolean {
     if (!this.authService.user) {
       return false;
     }
 
-    if (this.authService.user?.role === UserRole.ADMIN) {
+    if (this.authService.isAdmin()) {
       return true;
+    }
+
+    return apptm.status === AppointmentStatus.SCHEDULED;
+  }
+
+  canAlterApptmStatus(apptm: Appointment) {
+    if (!this.authService.user) {
+      return false;
     }
 
     return apptm.status === AppointmentStatus.SCHEDULED;

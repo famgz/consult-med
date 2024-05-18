@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthUser, User, UserCredentials } from '../models/user.model';
+import {
+  AuthUser,
+  User,
+  UserCredentials,
+  UserRole,
+} from '../models/user.model';
 import { Constants } from '../../../commons/constants/contants.enum';
 import { Router } from '@angular/router';
 
@@ -43,5 +48,9 @@ export class AuthService implements OnInit {
     const userInfoString = localStorage.getItem(Constants.USER_INFO);
     this.user = userInfoString ? JSON.parse(userInfoString) : null;
     return this.isLoggedIn$;
+  }
+
+  isAdmin() {
+    return this.user?.role === UserRole.ADMIN;
   }
 }

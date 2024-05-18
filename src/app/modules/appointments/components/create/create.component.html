@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="_container mt-5">
   <div class="_form position-relative">
     <h1 class="text-center">{{ id ? "Editar" : "Agendar" }} Consulta</h1>
 
@@ -14,7 +14,7 @@
     </button>
 
     <!-- Status -->
-    @if (canEdit && appointment) {
+    @if (appointment && permissions.canAlterApptmStatus(appointment) ) {
     <form
       [formGroup]="statusForm"
       (ngSubmit)="onSubmitStatus()"
@@ -26,15 +26,16 @@
         class="mb-3"
         formControlName="status"
       >
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-around">
           @for(status of apptmStatusList; track status) {
+          @if(authService.isAdmin() || status !== 'DONE') {
           <mat-radio-button
             color="primary"
             value="{{ status }}"
             [checked]="status === appointment.status"
             >{{ statusDict[status].title }}</mat-radio-button
           >
-          }
+          } }
         </div>
       </mat-radio-group>
 

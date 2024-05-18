@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="_container mt-5">
   <h1 class="my-5 text-center">
     {{ authService.user?.role === "ADMIN" ? "Todas as" : "Minhas" }} Consultas
   </h1>
@@ -25,13 +25,15 @@
         mat-mini-fab
         color="primary"
         class="flex-center"
-        [disabled]="!permissions.canEdit(apptm)"
+        [disabled]="!permissions.canEditApptmInfo(apptm)"
         (click)="editAppointment(apptm.id!)"
       >
         <i class="fa-solid fa-pen"></i>
       </button>
 
       <!-- Delete button -->
+      @if(authService.isAdmin()) {
+
       <button
         mat-mini-fab
         color=""
@@ -41,6 +43,7 @@
       >
         <i class="fa-solid fa-trash"></i>
       </button>
+      }
 
       <!-- Status badge -->
       <div
