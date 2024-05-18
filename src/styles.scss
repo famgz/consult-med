@@ -38,6 +38,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   }
 }
 
+._container {
+  width: 100%;
+  max-width: 678px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 ._form {
   display: flex;
   flex-direction: column;

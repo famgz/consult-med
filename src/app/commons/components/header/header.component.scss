@@ -1,3 +1,12 @@
+.mat-toolbar {
+  height: fit-content;
+  padding: 0;
+
+  & > div {
+    padding: 1rem;
+  }
+}
+
 .header-logo {
   h1 {
     display: inline-block;
