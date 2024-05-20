@@ -1,8 +1,21 @@
 <div class="_container mt-5 pb-5">
-  <h1 class="my-5 section-title">
+  <h1 class="my-5 mb-4 section-title">
     {{ authService.getUser()?.role === "ADMIN" ? "Todas as" : "Minhas" }}
     Consultas
   </h1>
+  <div class="greetings">
+    <p>
+      Olá <strong>{{ authService.getUser()?.name || "Visitante" }}</strong
+      >{{ authService.isAdmin() ? "(admin)," : "," }}
+    </p>
+    <p>
+      {{
+        authService.isAdmin()
+          ? 'Aqui você poderá visualizar consultas de todos os usuários e alterar status das "Agendadas".'
+          : 'Aqui você poderá visualizar suas consultas e alterar informações e status das "Agendadas".'
+      }}
+    </p>
+  </div>
 
   @for (apptm of appointments; track apptm.id) {
   <!-- Date circle -->
@@ -31,7 +44,7 @@
       <button
         mat-mini-fab
         color="primary"
-        class="flex-center"
+        class="flex-center edit-btn"
         [disabled]="!permissions.canEnterEditPage(apptm)"
         (click)="editAppointment(apptm.id!)"
       >
@@ -44,7 +57,7 @@
       <button
         mat-mini-fab
         color=""
-        class="flex-center"
+        class="flex-center delete-btn"
         [disabled]="!permissions.canDelete(apptm)"
         (click)="openDeleteConfirmationDialog(apptm.id!)"
       >

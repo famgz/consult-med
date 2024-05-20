@@ -1,3 +1,18 @@
+.greetings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: #444;
+  background-color: #f8f8f8;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+
+  p {
+    margin: 0;
+  }
+}
+
 .apptm-card {
   position: relative;
   display: flex;
@@ -110,6 +125,22 @@
       padding: 0;
       // min-width: 40px;
       // max-width: 40px;
+    }
+
+    .edit-btn {
+      opacity: 0.8;
+
+      &:disabled {
+        opacity: 1;
+      }
+    }
+
+    .delete-btn {
+      color: #555;
+
+      &:disabled {
+        color: rgba(0, 0, 0, 0.38);
+      }
     }
   }
 

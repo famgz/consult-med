@@ -8,10 +8,12 @@ import { Subject, first } from 'rxjs';
 import { ConfirmationModalComponent } from '../../../../commons/components/confirmation-modal/confirmation-modal.component';
 import { DateParserService } from '../../../../commons/services/date-parser.service';
 import { AuthService } from '../../../auth/services/auth.service';
-import { Appointment } from '../../models/appointment.model';
 import { AppointmentsService } from '../../services/appointments.service';
 import { PermissionsService } from '../../services/permissions.service';
-import { appointmentStatusDict } from './../../models/appointment.model';
+import {
+  appointmentStatusDict,
+  Appointment,
+} from './../../models/appointment.model';
 
 @Component({
   selector: 'app-list',
@@ -24,6 +26,8 @@ export class ListComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe = new Subject();
 
   appointments: Appointment[] = [];
+
+  filteredAppointments: Appointment[] = [];
 
   statusDict = appointmentStatusDict;
 
@@ -49,15 +53,20 @@ export class ListComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe({
         next: (res: Appointment[]) => {
-          this.appointments = res.sort((a, b) => {
-            const dateTimeA = this.dateParser.getAppointmentFullDate(a);
-            const dateTimeB = this.dateParser.getAppointmentFullDate(b);
-            return dateTimeB.getTime() - dateTimeA.getTime();
-          });
           console.log(res);
+          this.appointments = res;
+          this.sortAppointmentsByDatetime();
         },
         error: (err) => console.error(err),
       });
+  }
+
+  sortAppointmentsByDatetime(): void {
+    this.appointments = this.appointments.sort((a, b) => {
+      const dateTimeA = this.dateParser.getAppointmentFullDate(a);
+      const dateTimeB = this.dateParser.getAppointmentFullDate(b);
+      return dateTimeB.getTime() - dateTimeA.getTime();
+    });
   }
 
   onDelete(id: string): void {
