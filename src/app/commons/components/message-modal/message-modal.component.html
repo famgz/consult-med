@@ -1,0 +1,9 @@
+<div class="text-center p-2">
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  @if(data.message) {
+  <mat-dialog-content>{{ data.message }}</mat-dialog-content>
+  }
+  <mat-dialog-actions class="d-flex justify-content-center m-0 p-0">
+    <button mat-button mat-dialog-close>Fechar</button>
+  </mat-dialog-actions>
+</div>

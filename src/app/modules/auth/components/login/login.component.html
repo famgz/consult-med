@@ -1,12 +1,7 @@
-<div class="_container">
-  <img
-    src="/assets/doc.png"
-    alt=""
-    class="d-block mx-auto my-5"
-    style="width: 150px; height: auto"
-  />
-  <h1 class="text-primary text-center fw-semibold">Login</h1>
+<div class="_container mt-5">
   <div class="_form">
+    <app-hero-image></app-hero-image>
+    <h1 class="section-title m-0">Login</h1>
     <form [formGroup]="form" (ngSubmit)="login()">
       <mat-form-field>
         <mat-label>Email</mat-label>
@@ -33,14 +28,16 @@
         >
           Entrar
         </button>
-        <p class="mt-4 mb-1">Ainda não tem conta?</p>
+        <p class="mt-5 mb-1">Ainda não tem conta?</p>
         <button
           mat-button
           class="text-lg-center"
           routerLink="/auth/register"
           type="button"
         >
-          <span class="fs-5 text-decoration-underline">Cadastrar-se</span>
+          <span class="fs-5 text-decoration-underline text-primary"
+            >Cadastrar-se</span
+          >
         </button>
       </div>
     </form>
