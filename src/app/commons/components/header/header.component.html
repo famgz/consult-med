@@ -9,10 +9,11 @@
       <i class="fa-solid fa-laptop-medical"></i>
       <h1 class="fw-bold">Consult Med</h1>
     </button>
-    @if(authService.checkAuthStatus() | async) {
+    @if(authService.isLoggedIn()) {
     <div class="flex-center gap-2">
       <button
         mat-button
+        color="primary"
         aria-label="Botao cadastrar consulta"
         routerLink="/appointments/create"
         class=""
@@ -22,6 +23,7 @@
       </button>
       <button
         mat-button
+        color="primary"
         aria-label="Botao mostrar contultas"
         routerLink="/appointments"
         class="me-3"
@@ -32,6 +34,7 @@
 
       <button
         mat-button
+        color="primary"
         aria-label="Botao logout"
         (click)="authService.logout()"
       >
