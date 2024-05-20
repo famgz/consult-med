@@ -15,16 +15,28 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  user: User | null = null;
+  private _user: User | null = null;
 
-  isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  private _isLoggedIn: boolean = false;
 
   apiUrl = `${environment.API_URL}/auth`;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    this.checkAuthStatus();
+    this.isLoggedIn();
+  }
+
+  private readTokens(): void {
+    const token = localStorage.getItem(Constants.TOKEN_KEY);
+    this._isLoggedIn = !!token;
+    const userInfoString = localStorage.getItem(Constants.USER_INFO);
+    this._user = userInfoString ? JSON.parse(userInfoString) : null;
+  }
+
+  private deleteTokens(): void {
+    localStorage.removeItem(Constants.TOKEN_KEY);
+    localStorage.removeItem(Constants.USER_INFO);
   }
 
   register(user: User): Observable<void> {
@@ -36,21 +48,22 @@ export class AuthService implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem(Constants.TOKEN_KEY);
-    localStorage.removeItem(Constants.USER_INFO);
-    this.checkAuthStatus();
+    this.deleteTokens();
+    this.readTokens();
     this.router.navigate(['auth', 'login']);
   }
 
-  checkAuthStatus(): Observable<boolean> {
-    const token = localStorage.getItem(Constants.TOKEN_KEY);
-    this.isLoggedIn$.next(!!token);
-    const userInfoString = localStorage.getItem(Constants.USER_INFO);
-    this.user = userInfoString ? JSON.parse(userInfoString) : null;
-    return this.isLoggedIn$;
+  getUser(): User | null {
+    this.readTokens();
+    return this._user;
+  }
+
+  isLoggedIn(): boolean {
+    this.readTokens();
+    return this._isLoggedIn;
   }
 
   isAdmin() {
-    return this.user?.role === UserRole.ADMIN;
+    return this._user?.role === UserRole.ADMIN;
   }
 }
