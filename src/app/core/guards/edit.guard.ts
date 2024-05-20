@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { first, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Appointment } from '../../modules/appointments/models/appointment.model';
 import { AppointmentsService } from '../../modules/appointments/services/appointments.service';
 import { PermissionsService } from '../../modules/appointments/services/permissions.service';

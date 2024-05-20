@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { AppointmentsComponent } from './modules/appointments/appointments.component';
-import { HeaderComponent } from './commons/components/header/header.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
+import { HeaderComponent } from './commons/components/header/header.component';
 import { LoadingService } from './commons/services/loading.service';
-import { NgIf } from '@angular/common';
-import { AsyncPipe } from '@angular/common';
+import { AppointmentsComponent } from './modules/appointments/appointments.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +13,6 @@ import { AsyncPipe } from '@angular/common';
     AppointmentsComponent,
     HeaderComponent,
     MatProgressSpinnerModule,
-    NgIf,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

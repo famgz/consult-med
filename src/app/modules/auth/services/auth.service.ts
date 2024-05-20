@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Constants } from '../../../commons/constants/contants.enum';
 import {
   AuthUser,
   User,
   UserCredentials,
   UserRole,
 } from '../models/user.model';
-import { Constants } from '../../../commons/constants/contants.enum';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',

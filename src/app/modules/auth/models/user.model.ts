@@ -28,7 +28,6 @@ export interface AuthUser {
   token: string;
 }
 
-// export type UserRole = 'USER' | 'ADMIN';
 export enum UserRole {
   USER = 'USER',
   ADMIN = 'ADMIN',
