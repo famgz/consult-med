@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +28,7 @@ import {
 import { PermissionsService } from '../../services/permissions.service';
 import { AppointmentsService } from './../../services/appointments.service';
 import { AuthService } from '../../../auth/services/auth.service';
+import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
 
 @Component({
   selector: 'app-create',
@@ -40,6 +44,7 @@ import { AuthService } from '../../../auth/services/auth.service';
     ReactiveFormsModule,
     RouterModule,
     MatRadioModule,
+    HeroImageComponent,
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
@@ -49,18 +54,40 @@ export class CreateComponent implements OnInit {
   statusForm!: FormGroup;
 
   id = '';
+
   nextDay = moment().add(2, 'days');
   nextDayString = this.nextDay.format('YYYY-MM-DD');
 
   appointment: Appointment | null = null;
-
-  canEdit: boolean = false;
 
   apptmStatus = AppointmentStatus;
 
   apptmStatusList = Object.values(AppointmentStatus);
 
   statusDict = appointmentStatusDict;
+
+  specialtyList = [
+    'Cardiologia',
+    'Dermatologia',
+    'Endocrinologia',
+    'Gastroenterologia',
+    'Ginecologia e Obstetrícia',
+    'Hematologia',
+    'Infectologia',
+    'Nefrologia',
+    'Neurologia',
+    'Oncologia',
+    'Ortopedia e Traumatologia',
+    'Otorrinolaringologia',
+    'Pediatria',
+    'Pneumologia',
+    'Psiquiatria',
+    'Radiologia',
+    'Reumatologia',
+    'Urologia',
+    'Cirurgia Geral',
+    'Oftalmologia',
+  ];
 
   constructor(
     private productsService: AppointmentsService,
@@ -103,8 +130,20 @@ export class CreateComponent implements OnInit {
 
   buildStatusForm(): void {
     this.statusForm = new FormGroup({
-      status: new FormControl(null, Validators.required),
+      status: new FormControl(null, [
+        Validators.required,
+        this.statusChangedValidator(),
+      ]),
     });
+  }
+
+  statusChangedValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value === this.apptmStatus.SCHEDULED) {
+        return { statusNotChanged: false };
+      }
+      return null;
+    };
   }
 
   getAppointmentById(): void {

@@ -1,6 +1,11 @@
-<div class="_container mt-5">
+<div class="_container mt-5 pb-5">
   <div class="_form position-relative">
-    <h1 class="text-center">{{ id ? "Editar" : "Agendar" }} Consulta</h1>
+    <!-- Only show hero image if creating new appointment -->
+    @if(!appointment) {
+    <app-hero-image></app-hero-image>
+    }
+
+    <h1 class="section-title">{{ id ? "Editar" : "Agendar" }} Consulta</h1>
 
     <!-- Back button -->
     <button
@@ -42,27 +47,40 @@
       <div class="d-flex justify-content-end mt-3">
         <div>
           <!-- Save button -->
-          <button mat-flat-button color="primary" class="">Salvar</button>
+          <button
+            mat-flat-button
+            color="primary"
+            class=""
+            [disabled]="statusForm.invalid"
+          >
+            Salvar
+          </button>
         </div>
       </div>
     </form>
     }
 
     <!-- Infos -->
+    @if(!appointment || permissions.canEditApptmInfo(appointment!)) {
     <div>
-      @if(id) {
-      <h2 class="d-block mb-1">Alterar informações</h2>
+      @if(appointment) {
+      <h2 class="d-block mb-3">Alterar informações</h2>
       }
+
       <form [formGroup]="infoForm" (ngSubmit)="onSubmitInfo()" class="">
         <mat-form-field>
           <mat-label>Especialidade</mat-label>
-          <input
-            matInput
+          <select
+            matNativeControl
             formControlName="specialty"
             name="specialty"
             id="specialty"
-          />
-          <mat-error>O campo é obrigatório</mat-error>
+            required
+          >
+            @for (spc of specialtyList; track spc) {
+            <option value="{{ spc }}">{{ spc }}</option>
+            }
+          </select>
         </mat-form-field>
 
         <mat-form-field>
@@ -124,5 +142,6 @@
         </div>
       </form>
     </div>
+    }
   </div>
 </div>
