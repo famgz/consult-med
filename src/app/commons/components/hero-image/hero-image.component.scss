@@ -1,0 +1,10 @@
+#hero-image {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  height: auto;
+
+  @media (max-width: 400px) {
+    width: 110px;
+  }
+}
