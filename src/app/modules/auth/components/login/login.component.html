@@ -2,6 +2,8 @@
   <div class="_form">
     <app-hero-image></app-hero-image>
     <h1 class="section-title m-0">Login</h1>
+
+    <!-- Login form -->
     <form [formGroup]="form" (ngSubmit)="login()">
       <mat-form-field>
         <mat-label>Email</mat-label>
@@ -20,6 +22,7 @@
       </mat-form-field>
 
       <div class="d-flex flex-column justify-content-end text-center">
+        <!-- Login button -->
         <button
           mat-flat-button
           color="primary"
@@ -28,6 +31,8 @@
         >
           Entrar
         </button>
+
+        <!-- Link to register -->
         <p class="mt-5 mb-1">Ainda não tem conta?</p>
         <button
           mat-button
