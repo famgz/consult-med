@@ -6,6 +6,8 @@ import { CreateComponent } from './modules/appointments/components/create/create
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { RegisterComponent } from './modules/auth/components/register/register.component';
 import { authGuard } from './core/guards/auth.guard';
+import { NotFoundComponent } from './commons/components/not-found/not-found.component';
+import { editGuard } from './core/guards/edit.guard';
 
 export const routes: Routes = [
   {
@@ -43,7 +45,10 @@ export const routes: Routes = [
       {
         path: 'edit/:id',
         component: CreateComponent,
+        canActivate: [editGuard],
       },
     ],
   },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: 'not-found' },
 ];
