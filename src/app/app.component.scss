@@ -1,8 +1,8 @@
 .overlay {
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   inset: 0;
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 50;
   display: flex;
