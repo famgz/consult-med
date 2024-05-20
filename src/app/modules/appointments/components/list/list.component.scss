@@ -59,6 +59,7 @@
     flex-direction: column;
     justify-content: space-around;
     flex: 1 1;
+    gap: 4px;
     overflow: hidden;
 
     span {
@@ -80,9 +81,7 @@
       font-size: 0.85rem;
       font-weight: 400;
       color: #aaa;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      cursor: pointer;
     }
 
     .apptm-specialty {

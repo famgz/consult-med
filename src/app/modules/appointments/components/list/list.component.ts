@@ -70,7 +70,7 @@ export class ListComponent implements OnInit, OnDestroy {
       });
   }
 
-  openDialog(id: string): void {
+  openDeleteConfirmationDialog(id: string): void {
     this.dialog
       .open(ConfirmationModalComponent, {
         width: '250px',

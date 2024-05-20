@@ -1,6 +1,7 @@
-<div class="_container mt-5">
-  <h1 class="my-5 text-center">
-    {{ authService.user?.role === "ADMIN" ? "Todas as" : "Minhas" }} Consultas
+<div class="_container mt-5 pb-5">
+  <h1 class="my-5 section-title">
+    {{ authService.getUser()?.role === "ADMIN" ? "Todas as" : "Minhas" }}
+    Consultas
   </h1>
 
   @for (apptm of appointments; track apptm.id) {
@@ -15,7 +16,13 @@
     <div class="apptm-info">
       <span class="apptm-hour">{{ apptm.time }}</span>
       <span class="apptm-doctor">Dr. {{ apptm.doctor }}</span>
-      <span class="apptm-obs" title="{{ apptm.obs }}">{{ apptm.obs }}</span>
+      <span
+        class="apptm-obs truncate"
+        #spanRef
+        title="{{ apptm.obs }}"
+        (click)="spanRef.classList.toggle('truncate')"
+        >{{ apptm.obs }}</span
+      >
       <span class="apptm-specialty">{{ apptm.specialty }}</span>
     </div>
 
@@ -25,21 +32,21 @@
         mat-mini-fab
         color="primary"
         class="flex-center"
-        [disabled]="!permissions.canEditApptmInfo(apptm)"
+        [disabled]="!permissions.canEnterEditPage(apptm)"
         (click)="editAppointment(apptm.id!)"
       >
         <i class="fa-solid fa-pen"></i>
       </button>
 
-      <!-- Delete button -->
       @if(authService.isAdmin()) {
 
+      <!-- Delete button -->
       <button
         mat-mini-fab
         color=""
         class="flex-center"
-        [disabled]="!permissions.canDelete()"
-        (click)="openDialog(apptm.id!)"
+        [disabled]="!permissions.canDelete(apptm)"
+        (click)="openDeleteConfirmationDialog(apptm.id!)"
       >
         <i class="fa-solid fa-trash"></i>
       </button>
