@@ -26,6 +26,10 @@
 button {
   font-weight: 600;
 
+  .btn-title {
+    font-size: 1rem;
+  }
+
   &:hover {
     background-color: var(--primary);
     color: white;

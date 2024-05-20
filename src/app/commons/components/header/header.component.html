@@ -1,5 +1,6 @@
 <mat-toolbar class="">
   <div class="_container d-flex justify-content-between">
+    <!-- Home -->
     <button
       mat-button
       color="primary"
@@ -11,6 +12,8 @@
     </button>
     @if(authService.isLoggedIn()) {
     <div class="flex-center gap-2">
+      <!-- Create appointment -->
+      @if(!authService.isAdmin()){
       <button
         mat-button
         color="primary"
@@ -21,6 +24,9 @@
         <i class="fa-solid fa-plus"></i>
         <span class="btn-title"> Agendar </span>
       </button>
+      }
+
+      <!-- List appointments -->
       <button
         mat-button
         color="primary"
@@ -32,6 +38,7 @@
         <span class="btn-title">Consultas</span>
       </button>
 
+      <!-- Logout -->
       <button
         mat-button
         color="primary"
@@ -44,6 +51,7 @@
     </div>
     } @else {
 
+    <!-- Login -->
     <button
       mat-button
       color="primary"
