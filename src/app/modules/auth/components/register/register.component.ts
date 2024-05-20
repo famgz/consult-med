@@ -8,11 +8,12 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { first } from 'rxjs';
 import { AddUser, UserRole } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { MatSelectModule } from '@angular/material/select';
+import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
 
 @Component({
   selector: 'app-register',
@@ -23,6 +24,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
+    HeroImageComponent,
+    RouterLink,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',

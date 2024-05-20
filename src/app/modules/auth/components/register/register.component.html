@@ -1,6 +1,7 @@
-<div class="_container">
-  <h1 class="mt-5 text-center">Cadastrar Usuário</h1>
+<div class="_container mt-5">
   <div class="_form">
+    <app-hero-image></app-hero-image>
+    <h1 class="section-title m-0">Cadastrar Usuário</h1>
     <form [formGroup]="form" (ngSubmit)="register()" class="mx-auto">
       <mat-form-field>
         <mat-label>Nome</mat-label>
@@ -27,11 +28,25 @@
       </mat-form-field>
 
       <div class="d-flex justify-content-end">
-        <button mat-stroked-button color="warn" class="me-3" type="reset">
+        <button mat-stroked-button color="" class="me-3" type="reset">
           Limpar
         </button>
         <button mat-flat-button color="primary" [disabled]="form.invalid">
           Registrar
+        </button>
+      </div>
+
+      <div class="d-flex flex-column justify-content-end text-center mt-5">
+        <p class="mb-1">Já possui conta?</p>
+        <button
+          mat-button
+          class="text-lg-center"
+          routerLink="/auth/login"
+          type="button"
+        >
+          <span class="fs-5 text-decoration-underline text-primary"
+            >Fazer Login</span
+          >
         </button>
       </div>
     </form>
