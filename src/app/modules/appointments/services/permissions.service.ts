@@ -9,27 +9,29 @@ import { Appointment, AppointmentStatus } from '../models/appointment.model';
 export class PermissionsService {
   constructor(private authService: AuthService) {}
 
-  canEditApptmInfo(apptm: Appointment): boolean {
-    if (!this.authService.user) {
-      return false;
-    }
-
-    if (this.authService.isAdmin()) {
-      return true;
-    }
-
+  private isApptmPending(apptm: Appointment) {
     return apptm.status === AppointmentStatus.SCHEDULED;
+  }
+
+  canEnterEditPage(apptm: Appointment): boolean {
+    if (!this.authService.getUser()) return false;
+    return this.isApptmPending(apptm);
+  }
+
+  canDelete(apptm: Appointment): boolean {
+    if (!this.authService.getUser()) return false;
+    if (!this.authService.isAdmin()) return false;
+    return this.isApptmPending(apptm);
+  }
+
+  canEditApptmInfo(apptm: Appointment): boolean {
+    if (!this.authService.getUser()) return false;
+    if (this.authService.isAdmin()) return false;
+    return this.isApptmPending(apptm);
   }
 
   canAlterApptmStatus(apptm: Appointment) {
-    if (!this.authService.user) {
-      return false;
-    }
-
-    return apptm.status === AppointmentStatus.SCHEDULED;
-  }
-
-  canDelete(): boolean {
-    return this.authService.user?.role === UserRole.ADMIN;
+    if (!this.authService.getUser()) return false;
+    return this.isApptmPending(apptm);
   }
 }
