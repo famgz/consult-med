@@ -14,6 +14,8 @@ import { AddUser, UserRole } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { MatSelectModule } from '@angular/material/select';
 import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageModalComponent } from '../../../../commons/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +36,11 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup;
   userRoles = Object.values(UserRole);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -49,6 +55,16 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  openErrorDialog(title: string, message: string): void {
+    this.dialog.open(MessageModalComponent, {
+      disableClose: false,
+      data: {
+        title,
+        message,
+      },
+    });
+  }
+
   register(): void {
     const user: AddUser = this.form.getRawValue();
     this.authService
@@ -60,6 +76,7 @@ export class RegisterComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
+          this.openErrorDialog(err.error.message, '');
         },
         complete: () => {
           this.router.navigate(['auth', 'login']);

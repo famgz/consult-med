@@ -14,6 +14,7 @@ import {
   appointmentStatusDict,
   Appointment,
 } from './../../models/appointment.model';
+import { MessageModalComponent } from '../../../../commons/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-list',
@@ -66,6 +67,16 @@ export class ListComponent implements OnInit, OnDestroy {
       const dateTimeA = this.dateParser.getAppointmentFullDate(a);
       const dateTimeB = this.dateParser.getAppointmentFullDate(b);
       return dateTimeB.getTime() - dateTimeA.getTime();
+    });
+  }
+
+  openErrorDialog(title: string, message: string): void {
+    this.dialog.open(MessageModalComponent, {
+      disableClose: false,
+      data: {
+        title,
+        message,
+      },
     });
   }
 

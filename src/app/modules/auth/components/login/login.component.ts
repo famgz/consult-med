@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  openDialog(title: string, message: string): void {
+  openErrorDialog(title: string, message: string): void {
     this.dialog.open(MessageModalComponent, {
       disableClose: false,
       data: {
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          this.openDialog(err.error.message, '');
+          this.openErrorDialog(err.error.message, '');
         },
         complete: () => {
           this.authService.isLoggedIn();
