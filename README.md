@@ -1,6 +1,15 @@
 # Consult Med
 
-### Aplicativo desenvolvido com a ferramenta Angular 17 para gerenciamento de consultas médicas.
+### Gerencie suas consultas médicas.
+
+<br>
+
+
+Aplicativo desenvolvido com a ferramenta Angular 17 para gerenciamento de consultas médicas.
+
+<br>
+<br>
+
 
 ![mobile version](https://raw.githubusercontent.com/famgz/famgz/main/presentations/consult-med/mobile.jpg)
 
@@ -11,9 +20,14 @@
 ![desktop version screen3](https://raw.githubusercontent.com/famgz/famgz/main/presentations/consult-med/desktop3.jpg)
 
 
+<br>
+<br>
+
 ---
-marp: true
----
+
+<br>
+<br>
+
 
 # Angular II - Projeto final
 
@@ -61,7 +75,13 @@ A aplicação consiste em um sistema de gerenciamento de consultas médicas, que
 Para a persistência das consultas, utilizaremos uma API, similar à utilizada em aula, que está disponível neste [repositório](https://github.com/ivirson/appointments-api).
 
 
+<br>
+<br>
+
 ---
+
+<br>
+<br>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 
