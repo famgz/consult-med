@@ -1,5 +1,5 @@
 <div class="text-center p-2">
-  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <h2 mat-dialog-title>{{ data.title || "Algo inesperado ocorreu" }}</h2>
   @if(data.message) {
   <mat-dialog-content>{{ data.message }}</mat-dialog-content>
   }
