@@ -6,7 +6,7 @@
   <div class="greetings">
     <p>
       Olá <strong>{{ authService.getUser()?.name || "Visitante" }}</strong
-      >{{ authService.isAdmin() ? "(admin)," : "," }}
+      >{{ authService.isAdmin() ? " (admin)," : "," }}
     </p>
     <p>
       {{
@@ -76,6 +76,6 @@
   </div>
 
   } @empty {
-  <div class="col-12 text-center">Nenhuma consulta cadastrada</div>
+  <div class="col-12 text-center mt-5">Nenhuma consulta cadastrada</div>
   }
 </div>

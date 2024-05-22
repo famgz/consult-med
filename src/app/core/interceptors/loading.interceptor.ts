@@ -18,7 +18,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
         if (!totalRequests) {
           loadingService.setLoading(false);
         }
-      }, 500);
+      }, 200);
     })
   );
 };
