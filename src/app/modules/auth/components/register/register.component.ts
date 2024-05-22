@@ -8,14 +8,12 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterLink } from '@angular/router';
 import { first } from 'rxjs';
+import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
 import { AddUser, UserRole } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
-import { MatSelectModule } from '@angular/material/select';
-import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MessageModalComponent } from '../../../../commons/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-register',
@@ -36,11 +34,7 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup;
   userRoles = Object.values(UserRole);
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -55,16 +49,6 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  openErrorDialog(title: string, message: string): void {
-    this.dialog.open(MessageModalComponent, {
-      disableClose: false,
-      data: {
-        title,
-        message,
-      },
-    });
-  }
-
   register(): void {
     const user: AddUser = this.form.getRawValue();
     this.authService
@@ -73,10 +57,6 @@ export class RegisterComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log(res);
-        },
-        error: (err) => {
-          console.error(err);
-          this.openErrorDialog(err.error.message, '');
         },
         complete: () => {
           this.router.navigate(['auth', 'login']);

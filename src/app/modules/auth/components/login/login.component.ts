@@ -10,12 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { first } from 'rxjs';
+import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
 import { Constants } from '../../../../commons/constants/contants.enum';
 import { AuthUser, UserCredentials } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
-import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MessageModalComponent } from '../../../../commons/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-login',
@@ -34,11 +32,7 @@ import { MessageModalComponent } from '../../../../commons/components/message-mo
 export class LoginComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -51,16 +45,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  openErrorDialog(title: string, message: string): void {
-    this.dialog.open(MessageModalComponent, {
-      disableClose: false,
-      data: {
-        title,
-        message,
-      },
-    });
-  }
-
   login(): void {
     const user: UserCredentials = this.form.getRawValue();
     this.authService
@@ -70,10 +54,6 @@ export class LoginComponent implements OnInit {
         next: (res: AuthUser) => {
           localStorage.setItem(Constants.TOKEN_KEY, res.token);
           localStorage.setItem(Constants.USER_INFO, JSON.stringify(res.user));
-        },
-        error: (err) => {
-          console.error(err);
-          this.openErrorDialog(err.error.message, '');
         },
         complete: () => {
           this.authService.isLoggedIn();

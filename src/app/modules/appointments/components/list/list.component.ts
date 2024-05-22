@@ -11,10 +11,9 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { AppointmentsService } from '../../services/appointments.service';
 import { PermissionsService } from '../../services/permissions.service';
 import {
-  appointmentStatusDict,
   Appointment,
+  appointmentStatusDict,
 } from './../../models/appointment.model';
-import { MessageModalComponent } from '../../../../commons/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-list',
@@ -70,22 +69,11 @@ export class ListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openErrorDialog(title: string, message: string): void {
-    this.dialog.open(MessageModalComponent, {
-      disableClose: false,
-      data: {
-        title,
-        message,
-      },
-    });
-  }
-
   onDelete(id: string): void {
     this.productsService
       .deleteAppointment(id)
       .pipe(first())
       .subscribe({
-        error: (err) => console.error(err),
         complete: () => this.getAppointments(),
       });
   }

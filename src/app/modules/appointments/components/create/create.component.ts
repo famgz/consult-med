@@ -19,7 +19,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import moment from 'moment';
 import { first } from 'rxjs';
+import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
 import { DateParserService } from '../../../../commons/services/date-parser.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import {
   Appointment,
   AppointmentStatus,
@@ -27,10 +29,6 @@ import {
 } from '../../models/appointment.model';
 import { PermissionsService } from '../../services/permissions.service';
 import { AppointmentsService } from './../../services/appointments.service';
-import { AuthService } from '../../../auth/services/auth.service';
-import { HeroImageComponent } from '../../../../commons/components/hero-image/hero-image.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MessageModalComponent } from '../../../../commons/components/message-modal/message-modal.component';
 
 @Component({
   selector: 'app-create',
@@ -97,8 +95,7 @@ export class CreateComponent implements OnInit {
     private route: ActivatedRoute,
     public dateParser: DateParserService,
     public permissions: PermissionsService,
-    public authService: AuthService,
-    private dialog: MatDialog
+    public authService: AuthService
   ) {
     this.buildInfoForm();
     this.buildStatusForm();
@@ -140,16 +137,6 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  openErrorDialog(title: string, message: string): void {
-    this.dialog.open(MessageModalComponent, {
-      disableClose: false,
-      data: {
-        title,
-        message,
-      },
-    });
-  }
-
   statusChangedValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value === this.apptmStatus.SCHEDULED) {
@@ -167,10 +154,6 @@ export class CreateComponent implements OnInit {
         next: (appointment) => {
           this.appointment = appointment;
           this.infoForm.patchValue(appointment);
-        },
-        error: (err) => {
-          console.error(err);
-          this.openErrorDialog(err.error.message, '');
         },
       });
   }
@@ -210,10 +193,6 @@ export class CreateComponent implements OnInit {
 
     func.pipe(first()).subscribe({
       next: (res) => console.log({ res }),
-      error: (err) => {
-        console.error(err);
-        this.openErrorDialog(err.error.message, '');
-      },
       complete: () => {
         this.router.navigate(['appointments']);
       },
@@ -226,10 +205,6 @@ export class CreateComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: (res) => console.log({ res }),
-        error: (err) => {
-          console.error(err);
-          this.openErrorDialog(err.error.message, '');
-        },
         complete: () => {
           this.router.navigate(['appointments']);
         },
@@ -242,10 +217,6 @@ export class CreateComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: (res) => console.log({ res }),
-        error: (err) => {
-          console.error(err);
-          this.openErrorDialog(err.error.message, '');
-        },
         complete: () => {
           this.router.navigate(['appointments']);
         },
