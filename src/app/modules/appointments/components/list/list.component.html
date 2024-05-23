@@ -3,6 +3,8 @@
     {{ authService.getUser()?.role === "ADMIN" ? "Todas as" : "Minhas" }}
     Consultas
   </h1>
+
+  <!-- Greetings -->
   <div class="greetings">
     <p>
       Olá <strong>{{ authService.getUser()?.name || "Visitante" }}</strong
@@ -11,13 +13,14 @@
     <p>
       {{
         isAdmin
-          ? 'Aqui você poderá visualizar consultas de todos os usuários, alterar status ouexcluir as "Agendadas".'
+          ? 'Aqui você poderá visualizar consultas de todos os usuários, alterar status ou excluir as "Agendadas".'
           : 'Aqui você poderá visualizar suas consultas, alterar informações ou cancelar as "Agendadas".'
       }}
     </p>
   </div>
 
   <!-- Status filter -->
+  @if(appointments.length) {
   <div class="apptms-filters">
     @for(status of statusList; track status) {
     <button
@@ -32,7 +35,9 @@
     </button>
     }
   </div>
+  }
 
+  <!-- Appointments list -->
   @for (apptm of filteredAppointments; track apptm.id) {
   <div class="apptm-card">
     <!-- Date circle -->
@@ -96,6 +101,6 @@
   </div>
 
   } @empty {
-  <div class="col-12 text-center mt-5">Nenhuma consulta encontrada</div>
+  <div class="text-center mt-5">Nenhuma consulta encontrada</div>
   }
 </div>
