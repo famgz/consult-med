@@ -11,14 +11,29 @@
     <p>
       {{
         isAdmin
-          ? 'Aqui você poderá visualizar consultas de todos os usuários, excluir ou alterar status das "Agendadas".'
+          ? 'Aqui você poderá visualizar consultas de todos os usuários, alterar status ouexcluir as "Agendadas".'
           : 'Aqui você poderá visualizar suas consultas, alterar informações ou cancelar as "Agendadas".'
       }}
     </p>
   </div>
 
-  @for (apptm of appointments; track apptm.id) {
+  <!-- Status filter -->
+  <div class="apptms-filters">
+    @for(status of statusList; track status) {
+    <button
+      mat-button
+      color="primary"
+      aria-label="Status consulta"
+      class="apptm-filter-btn"
+      [class.active]="currentStatusFilter === status"
+      (click)="filterAppointmentsByStatus(status)"
+    >
+      {{ statusDict[status].title }}
+    </button>
+    }
+  </div>
 
+  @for (apptm of filteredAppointments; track apptm.id) {
   <div class="apptm-card">
     <!-- Date circle -->
     <div class="apptm-date">
@@ -81,6 +96,6 @@
   </div>
 
   } @empty {
-  <div class="col-12 text-center mt-5">Nenhuma consulta cadastrada</div>
+  <div class="col-12 text-center mt-5">Nenhuma consulta encontrada</div>
   }
 </div>

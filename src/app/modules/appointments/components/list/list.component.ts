@@ -12,6 +12,7 @@ import { AppointmentsService } from '../../services/appointments.service';
 import { PermissionsService } from '../../services/permissions.service';
 import {
   Appointment,
+  AppointmentStatus,
   appointmentStatusDict,
 } from './../../models/appointment.model';
 import { User } from '../../../auth/models/user.model';
@@ -26,11 +27,18 @@ import { User } from '../../../auth/models/user.model';
 export class ListComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe = new Subject();
 
+  statusList = ['ALL', ...Object.values(AppointmentStatus)] as const;
+
+  statusDict = {
+    ...appointmentStatusDict,
+    ALL: { title: 'Todas', color: '#ccc' },
+  };
+
   appointments: Appointment[] = [];
 
   filteredAppointments: Appointment[] = [];
 
-  statusDict = appointmentStatusDict;
+  currentStatusFilter = 'ALL';
 
   isAdmin: boolean = this.authService.isAdmin();
 
@@ -61,6 +69,7 @@ export class ListComponent implements OnInit, OnDestroy {
           console.log(res);
           this.appointments = res;
           this.sortAppointmentsByDatetime();
+          this.filteredAppointments = this.appointments;
         },
         error: (err) => console.error(err),
       });
@@ -72,6 +81,17 @@ export class ListComponent implements OnInit, OnDestroy {
       const dateTimeB = this.dateParser.getAppointmentFullDate(b);
       return dateTimeB.getTime() - dateTimeA.getTime();
     });
+  }
+
+  filterAppointmentsByStatus(status: string) {
+    this.currentStatusFilter = status;
+    if (status === 'ALL') {
+      this.filteredAppointments = this.appointments;
+      return;
+    }
+    this.filteredAppointments = this.appointments.filter(
+      (apptm) => apptm.status === status
+    );
   }
 
   onDelete(id: string): void {
