@@ -39,11 +39,4 @@ export class AppointmentsService {
   doneAppointment(id: string): Observable<void> {
     return this.http.put<void>(this.apiUrl + '/done/' + id, {});
   }
-
-  // private setHeaders() {
-  //   let headers = new HttpHeaders();
-  //   const token = localStorage.getItem(Constants.TOKEN_KEY) ?? '';
-  //   headers = headers.set('Authorization', 'Bearer ' + token);
-  //   return { headers };
-  // }
 }

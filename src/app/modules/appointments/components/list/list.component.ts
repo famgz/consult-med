@@ -14,6 +14,7 @@ import {
   Appointment,
   appointmentStatusDict,
 } from './../../models/appointment.model';
+import { User } from '../../../auth/models/user.model';
 
 @Component({
   selector: 'app-list',
@@ -30,6 +31,10 @@ export class ListComponent implements OnInit, OnDestroy {
   filteredAppointments: Appointment[] = [];
 
   statusDict = appointmentStatusDict;
+
+  isAdmin: boolean = this.authService.isAdmin();
+
+  user: User = this.authService.getUser()!;
 
   constructor(
     private productsService: AppointmentsService,

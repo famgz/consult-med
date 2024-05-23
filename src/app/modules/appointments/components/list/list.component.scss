@@ -33,7 +33,18 @@
 
   @media (max-width: 360px) {
     flex-direction: column;
+    padding-top: 3rem;
     gap: 1rem;
+  }
+
+  .apptm-user {
+    font-weight: 600;
+    color: var(--primary);
+    @media (max-width: 360px) {
+      position: absolute;
+      top: 1rem;
+      left: 0;
+    }
   }
 
   .apptm-date {
@@ -66,6 +77,10 @@
       color: var(--primary);
       font-size: 1.25rem;
       font-weight: 700;
+    }
+
+    @media (max-width: 360px) {
+      margin: 0 auto;
     }
   }
 
@@ -155,7 +170,7 @@
     border-radius: 999px;
 
     @media (max-width: 360px) {
-      top: 2rem;
+      top: 1rem;
     }
   }
 }

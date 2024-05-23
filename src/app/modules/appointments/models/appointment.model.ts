@@ -1,3 +1,5 @@
+import { User } from '../../auth/models/user.model';
+
 export interface Appointment {
   id?: string;
   specialty: string;
@@ -6,6 +8,7 @@ export interface Appointment {
   time: string;
   obs: string;
   status: AppointmentStatus;
+  User?: User;
 }
 
 export interface AddAppointment {

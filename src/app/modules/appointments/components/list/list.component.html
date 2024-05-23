@@ -6,20 +6,21 @@
   <div class="greetings">
     <p>
       Olá <strong>{{ authService.getUser()?.name || "Visitante" }}</strong
-      >{{ authService.isAdmin() ? " (admin)," : "," }}
+      >{{ isAdmin ? " (admin)," : "," }}
     </p>
     <p>
       {{
-        authService.isAdmin()
-          ? 'Aqui você poderá visualizar consultas de todos os usuários e alterar status das "Agendadas".'
-          : 'Aqui você poderá visualizar suas consultas e alterar informações e status das "Agendadas".'
+        isAdmin
+          ? 'Aqui você poderá visualizar consultas de todos os usuários, excluir ou alterar status das "Agendadas".'
+          : 'Aqui você poderá visualizar suas consultas, alterar informações ou cancelar as "Agendadas".'
       }}
     </p>
   </div>
 
   @for (apptm of appointments; track apptm.id) {
-  <!-- Date circle -->
+
   <div class="apptm-card">
+    <!-- Date circle -->
     <div class="apptm-date">
       <span>{{ dateParser.getDayMonthShort(apptm.date) }}</span>
       <span>{{ dateParser.getYear(apptm.date) }}</span>
@@ -27,6 +28,10 @@
 
     <!-- Infos -->
     <div class="apptm-info">
+      <!-- User name -->
+      @if(apptm?.User) {
+      <div class="apptm-user">{{ apptm.User!.name }}</div>
+      }
       <span class="apptm-hour">{{ apptm.time }}</span>
       <span class="apptm-doctor">Dr. {{ apptm.doctor }}</span>
       <span
@@ -51,7 +56,7 @@
         <i class="fa-solid fa-pen"></i>
       </button>
 
-      @if(authService.isAdmin()) {
+      @if(isAdmin) {
 
       <!-- Delete button -->
       <button
