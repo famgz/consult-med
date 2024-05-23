@@ -120,10 +120,7 @@ export class CreateComponent implements OnInit {
         Validators.required,
         Validators.min(this.nextDay.millisecond()),
       ]),
-      time: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^([01]\d|2[0-3]):([0-5]\d)$/),
-      ]),
+      time: new FormControl(null, [Validators.required]),
       obs: new FormControl(null, [
         Validators.required,
         Validators.maxLength(1000),
