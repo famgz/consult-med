@@ -41,7 +41,7 @@
     padding-right: 2rem;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 359px) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -65,7 +65,7 @@
     );
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 359px) {
     flex-direction: column;
     padding-top: 3rem;
     gap: 1rem;
@@ -74,7 +74,7 @@
   .apptm-user {
     font-weight: 600;
     color: var(--primary);
-    @media (max-width: 360px) {
+    @media (max-width: 359px) {
       position: absolute;
       top: 1rem;
       left: 0;
@@ -113,7 +113,7 @@
       font-weight: 700;
     }
 
-    @media (max-width: 360px) {
+    @media (max-width: 359px) {
       margin: 0 auto;
     }
   }
@@ -162,7 +162,12 @@
     align-items: end;
     justify-content: end;
 
-    @media (max-width: 360px) {
+    @media (max-width: 400px) {
+      flex-direction: column;
+    }
+
+    @media (max-width: 359px) {
+      flex-direction: row;
       justify-content: space-evenly;
       button {
         border-radius: 1rem;
@@ -204,7 +209,7 @@
     color: white;
     border-radius: 999px;
 
-    @media (max-width: 360px) {
+    @media (max-width: 359px) {
       top: 1rem;
     }
   }
