@@ -26,6 +26,7 @@ import {
   Appointment,
   AppointmentStatus,
   appointmentStatusDict,
+  specialtyDict,
 } from '../../models/appointment.model';
 import { PermissionsService } from '../../services/permissions.service';
 import { AppointmentsService } from './../../services/appointments.service';
@@ -66,28 +67,11 @@ export class CreateComponent implements OnInit {
 
   statusDict = appointmentStatusDict;
 
-  specialtyList = [
-    'Cardiologia',
-    'Dermatologia',
-    'Endocrinologia',
-    'Gastroenterologia',
-    'Ginecologia e Obstetrícia',
-    'Hematologia',
-    'Infectologia',
-    'Nefrologia',
-    'Neurologia',
-    'Oncologia',
-    'Ortopedia e Traumatologia',
-    'Otorrinolaringologia',
-    'Pediatria',
-    'Pneumologia',
-    'Psiquiatria',
-    'Radiologia',
-    'Reumatologia',
-    'Urologia',
-    'Cirurgia Geral',
-    'Oftalmologia',
-  ];
+  specialtyDict = specialtyDict;
+
+  specialtyList = Object.keys(specialtyDict);
+
+  currentDoctors: string[] = [];
 
   constructor(
     private productsService: AppointmentsService,
@@ -99,6 +83,7 @@ export class CreateComponent implements OnInit {
   ) {
     this.buildInfoForm();
     this.buildStatusForm();
+    this.subscribeToSpecialtyChanges();
   }
 
   ngOnInit(): void {
@@ -126,6 +111,14 @@ export class CreateComponent implements OnInit {
         Validators.maxLength(1000),
       ]),
     });
+  }
+
+  subscribeToSpecialtyChanges(): void {
+    this.infoForm
+      .get('specialty')
+      ?.valueChanges.subscribe((specialty: string) => {
+        this.currentDoctors = this.specialtyDict[specialty] || [];
+      });
   }
 
   buildStatusForm(): void {

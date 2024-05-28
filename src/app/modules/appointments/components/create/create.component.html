@@ -70,7 +70,7 @@
       <form [formGroup]="infoForm" (ngSubmit)="onSubmitInfo()" class="">
         <mat-form-field>
           <mat-label>Especialidade</mat-label>
-          <select
+          <mat-select
             matNativeControl
             formControlName="specialty"
             name="specialty"
@@ -78,15 +78,24 @@
             required
           >
             @for (spc of specialtyList; track spc) {
-            <option value="{{ spc }}">{{ spc }}</option>
+            <mat-option value="{{ spc }}">{{ spc }}</mat-option>
             }
-          </select>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Médico</mat-label>
-          <input matInput formControlName="doctor" name="doctor" id="doctor" />
-          <mat-error>O campo é obrigatório</mat-error>
+          <mat-select
+            matNativeControl
+            formControlName="doctor"
+            name="doctor"
+            id="doctor"
+            required
+          >
+            @for(doctor of currentDoctors; track doctor) {
+            <mat-option value="{{ doctor }}">{{ doctor }}</mat-option>
+            }
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field>
